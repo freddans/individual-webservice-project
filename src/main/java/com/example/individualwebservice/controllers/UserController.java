@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.findAllUsers());
     }

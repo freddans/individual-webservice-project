@@ -1,6 +1,7 @@
 package com.example.individualwebservice.services;
 
 import com.example.individualwebservice.Repositories.UserRepository;
+import com.example.individualwebservice.entities.Address;
 import com.example.individualwebservice.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private AddressService addressService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AddressService addressService) {
         this.userRepository = userRepository;
+        this.addressService = addressService;
     }
 
     public List<User> findAllUsers() {
@@ -36,13 +39,24 @@ public class UserService {
     }
 
     public User createNewUser(User userInformation) {
-        if (userInformation.getFirstName() != null && userInformation.getLastName() != null && userInformation.getAddress() != null && userInformation.getEmail() != null && userInformation.getPhone() != null && userInformation.getMemberType() != null) {
 
-            User user = new User(userInformation.getFirstName(), userInformation.getLastName(), userInformation.getAddress(), userInformation.getEmail(), userInformation.getPhone(), userInformation.getMemberType());
+        User existingUser = userRepository.findUserByEmail(userInformation.getEmail());
 
-            userRepository.save(user);
+        if (existingUser == null) {
+            Address address = addressService.findAddressById(userInformation.getAddress().getId());
 
-            return user;
+            if (userInformation.getFirstName() != null && userInformation.getLastName() != null && address != null && userInformation.getEmail() != null && userInformation.getPhone() != null && userInformation.getMemberType() != null) {
+
+                User user = new User(userInformation.getFirstName(), userInformation.getLastName(), address, userInformation.getEmail(), userInformation.getPhone(), userInformation.getMemberType());
+
+                userRepository.save(user);
+
+                return user;
+
+            } else {
+
+                return null;
+            }
         } else {
 
             return null;

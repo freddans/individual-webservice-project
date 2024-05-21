@@ -23,7 +23,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
-    @Value("individual")
+    @Value("bloggheaven")
     private String resourceId;
     @Value("{jwt.auth.converter.principle-attribute}")
     private String principleAttribute;

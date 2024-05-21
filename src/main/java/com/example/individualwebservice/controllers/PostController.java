@@ -32,19 +32,16 @@ public class PostController {
     }
 
     @PostMapping("/newpost")
-    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<Post> createNewPost(@RequestBody Post postInformation, @RequestParam("userId") long id) {
         return ResponseEntity.ok(postService.createNewPost(postInformation, id));
     }
 
     @PutMapping("/updatepost/{id}")
-    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<Post> updatePost(@PathVariable long id, @RequestBody Post newPostInformation) {
         return ResponseEntity.ok(postService.updatePost(id, newPostInformation));
     }
 
     @DeleteMapping("/deletepost/{id}")
-    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<String> deletePost(@PathVariable long id) {
         return ResponseEntity.ok(postService.deletePost(id));
     }

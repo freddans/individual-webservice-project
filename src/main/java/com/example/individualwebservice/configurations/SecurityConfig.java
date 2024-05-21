@@ -35,30 +35,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf->csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/**").hasAnyRole("bloggheaven_ADMIN", "bloggheaven_USER")
-                                .requestMatchers("/api/newuser").permitAll()
-                                .requestMatchers("/api/posts").permitAll()
-                                .requestMatchers("/api/posts/**").permitAll()
+                        .requestMatchers("/api/newpost").authenticated()
+                        .requestMatchers("/api/updatepost/**").authenticated()
+                        .requestMatchers("/api/deletepost/**").authenticated()
 
-                                .anyRequest().permitAll()
-                )
+                        .requestMatchers("/api/users").hasRole("bloggheaven_ADMIN")
+                        .requestMatchers("/api/users/**").hasRole("bloggheaven_ADMIN")
 
-                .oauth2ResourceServer(ors ->
-                        ors
-                                .jwt(jwtConfigurer ->
-                                        jwtConfigurer
-                                                .jwtAuthenticationConverter(jwtAuthConverter)
-                                )
-                )
 
-                .sessionManagement(sessionManagement ->
-                        sessionManagement
-                                .sessionCreationPolicy(STATELESS)
+                        .anyRequest()
+                        .permitAll()
+                );
+
+        http
+                .oauth2ResourceServer(ors -> ors
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(jwtAuthConverter))
+                );
+
+        http
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(STATELESS)
                 );
 
         return http.build();
     }
+
+
 }
