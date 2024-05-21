@@ -45,18 +45,25 @@ public class UserService {
         if (existingUser == null) {
             Address address = addressService.findAddressById(userInformation.getAddress().getId());
 
-            if (userInformation.getFirstName() != null && userInformation.getLastName() != null && address != null && userInformation.getEmail() != null && userInformation.getPhone() != null && userInformation.getMemberType() != null) {
+            if (userInformation.getMemberType().toString().contains("STANDARD") || userInformation.getMemberType().toString().contains("ENHANCED") || userInformation.getMemberType().toString().contains("PREMIUM")) {
 
-                User user = new User(userInformation.getFirstName(), userInformation.getLastName(), address, userInformation.getEmail(), userInformation.getPhone(), userInformation.getMemberType());
+                if (userInformation.getFirstName() != null && userInformation.getLastName() != null && address != null && userInformation.getEmail() != null && userInformation.getPhone() != null && userInformation.getMemberType() != null) {
 
-                userRepository.save(user);
+                    User user = new User(userInformation.getFirstName(), userInformation.getLastName(), address, userInformation.getEmail(), userInformation.getPhone(), userInformation.getMemberType());
 
-                return user;
+                    userRepository.save(user);
 
+                    return user;
+
+                } else {
+
+                    return null;
+                }
             } else {
 
                 return null;
             }
+
         } else {
 
             return null;
