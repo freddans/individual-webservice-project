@@ -5,6 +5,7 @@ import com.example.individualwebservice.entities.User;
 import com.example.individualwebservice.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,16 +32,19 @@ public class PostController {
     }
 
     @PostMapping("/newpost")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<Post> createNewPost(@RequestBody Post postInformation, @RequestParam("userId") long id) {
         return ResponseEntity.ok(postService.createNewPost(postInformation, id));
     }
 
     @PutMapping("/updatepost/{id}")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<Post> updatePost(@PathVariable long id, @RequestBody Post newPostInformation) {
         return ResponseEntity.ok(postService.updatePost(id, newPostInformation));
     }
 
     @DeleteMapping("/deletepost/{id}")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<String> deletePost(@PathVariable long id) {
         return ResponseEntity.ok(postService.deletePost(id));
     }

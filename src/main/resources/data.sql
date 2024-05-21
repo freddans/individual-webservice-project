@@ -6,11 +6,11 @@ INSERT INTO addresses (street, postalcode, city, country) VALUES
                                                               ('Svartagatan 4', '128 45', 'Bagarmossen', 'Sweden');
 
 INSERT INTO users (firstname, lastname, email, phone, membertype, address_id) VALUES
-                                                                               ('Jakob', 'Andersson', 'jandersson@gmail.com', '+46701111111', 'Standard', 1),
-                                                                               ('Hanna', 'Linn', 'hannasmail@icloud.com', '+34702222222', 'Enhanced', 2),
-                                                                               ('Robin', 'Nilsson', 'r_nilsson@gmail.com', '+46703333333', 'Premium', 3),
-                                                                               ('Patrik', 'Gustavsson', 'patrik@familjengustavsson.se', '+34704444444', 'Premium', 4),
-                                                                               ('Lina', 'Haraldsdotter', 'lh@hotmail.com', '+46705555555', 'Standard', 4);
+                                                                               ('Jakob', 'Andersson', 'jandersson@gmail.com', '+46701111111', 'STANDARD', 1),
+                                                                               ('Hanna', 'Linn', 'hannasmail@icloud.com', '+34702222222', 'ENHANCED', 2),
+                                                                               ('Robin', 'Nilsson', 'r_nilsson@gmail.com', '+46703333333', 'PREMIUM', 3),
+                                                                               ('Patrik', 'Gustavsson', 'patrik@familjengustavsson.se', '+34704444444', 'PREMIUM', 4),
+                                                                               ('Lina', 'Haraldsdotter', 'lh@hotmail.com', '+46705555555', 'STANDARD', 4);
 
 INSERT INTO posts (topic, content, user_id) VALUES
                                        ('How To Learn Java', 'Buy Coffeebeans, put into a grinder, crush, pour into coffeemachine, top up with water, let it cook, serve and enjoy.', 1),

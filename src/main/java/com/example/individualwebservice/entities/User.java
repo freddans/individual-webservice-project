@@ -18,8 +18,10 @@ public class User {
     private String email;
     @Column(name = "phone")
     private String phone;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "membertype")
-    private String memberType;
+    private MemberType memberType;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -28,7 +30,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, Address address, String email, String phone, String memberType) {
+    public User(String firstName, String lastName, Address address, String email, String phone, MemberType memberType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -77,11 +79,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getMemberType() {
+    public MemberType getMemberType() {
         return memberType;
     }
 
-    public void setMemberType(String memberType) {
+    public void setMemberType(MemberType memberType) {
         this.memberType = memberType;
     }
 

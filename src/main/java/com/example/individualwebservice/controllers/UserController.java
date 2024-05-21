@@ -4,6 +4,7 @@ import com.example.individualwebservice.entities.User;
 import com.example.individualwebservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN' or hasRole('bloggheaven_USER'))")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
     @GetMapping("/users/{id}")
+    @PreAuthorize("hasRole('bloggheaven_ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable long id) {
         return ResponseEntity.ok(userService.findUserById(id));
     }
