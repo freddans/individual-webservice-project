@@ -1,9 +1,39 @@
+CREATE SCHEMA IF NOT EXISTS bloggheaven;
+
+CREATE TABLE IF NOT EXISTS addresses (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    street VARCHAR(50),
+    postal_code VARCHAR(20),
+    city VARCHAR(35),
+    country VARCHAR(35)
+    );
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(35),
+    last_name VARCHAR(35),
+    email VARCHAR(60),
+    phone VARCHAR(25),
+    member_type ENUM('STANDARD', 'ENHANCED', 'PREMIUM'),
+    address_id BIGINT,
+    FOREIGN KEY (address_id) REFERENCES addresses(id)
+    );
+
+CREATE TABLE IF NOT EXISTS posts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    topic VARCHAR(255),
+    content VARCHAR(255),
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+
 INSERT INTO addresses (street, postal_code, city, country) VALUES
-                                                              ('Fyrklövern 2', '449 34', 'Nödinge', 'Sweden'),
-                                                              ('Alcon Molina 82', '30800', 'Lorca', 'Spain'),
-                                                              ('Solkraftsvagen 23', '135 70', 'Stockholm', 'Sweden'),
-                                                              ('Av. José Sánchez Peñate, 24', '35518', 'Las Palmas de Gran Canaria', 'Spain'),
-                                                              ('Svartagatan 4', '128 45', 'Bagarmossen', 'Sweden');
+                                                               ('Fyrklövern 2', '449 34', 'Nödinge', 'Sweden'),
+                                                               ('Alcon Molina 82', '30800', 'Lorca', 'Spain'),
+                                                               ('Solkraftsvagen 23', '135 70', 'Stockholm', 'Sweden'),
+                                                               ('Av. José Sánchez Peñate, 24', '35518', 'Las Palmas de Gran Canaria', 'Spain'),
+                                                               ('Svartagatan 4', '128 45', 'Bagarmossen', 'Sweden');
 
 INSERT INTO users (first_name, last_name, email, phone, member_type, address_id) VALUES
                                                                                   ('Jakob', 'Andersson', 'jandersson@gmail.com', '+46701111111', 'STANDARD', 1),
