@@ -48,6 +48,8 @@ public class PostService {
 
                 Post post = new Post(postInformation.getTopic(), postInformation.getContent(), existingUser);
 
+                existingUser.addPostToList(post);
+
                 postRepository.save(post);
 
                 return post;
@@ -89,11 +91,23 @@ public class PostService {
     public String deletePost(long id) {
         Post postToBeDeleted = findPostById(id);
 
+
         if (postToBeDeleted != null) {
 
-            postRepository.delete(postToBeDeleted);
+            User user = postToBeDeleted.getUser();
 
-            return "Deleted post";
+            if (user != null) {
+
+                user.removePostFromList(postToBeDeleted);
+
+                postRepository.delete(postToBeDeleted);
+
+                return "Deleted post";
+            } else {
+
+                return "ERROR: User null";
+            }
+
         } else {
 
             return "ERROR: Post ID provided does not exist";

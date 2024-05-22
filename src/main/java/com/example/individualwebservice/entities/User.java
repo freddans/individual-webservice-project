@@ -1,6 +1,10 @@
 package com.example.individualwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +27,10 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Post> postList;
 
     public User() {
     }
@@ -90,5 +98,21 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
+
+    public void addPostToList(Post post) {
+        postList.add(post);
+    }
+
+    public void removePostFromList(Post post) {
+        postList.remove(post);
     }
 }
