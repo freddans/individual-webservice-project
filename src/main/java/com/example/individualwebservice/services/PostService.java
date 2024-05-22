@@ -94,7 +94,7 @@ public class PostService {
 
         if (postToBeDeleted != null) {
 
-            User user = postToBeDeleted.getUser();
+            User user = postToBeDeleted.getAuthor();
 
             if (user != null) {
 

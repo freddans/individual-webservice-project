@@ -21,15 +21,15 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"phone", "memberType", "address", "postList"})
-    private User user;
+    private User author;
 
     public Post() {
     }
 
-    public Post(String topic, String content, User user) {
+    public Post(String topic, String content, User author) {
         this.topic = topic;
         this.content = content;
-        this.user = user;
+        this.author = author;
     }
 
     public long getId() {
@@ -56,11 +56,11 @@ public class Post {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User author) {
+        this.author = author;
     }
 }

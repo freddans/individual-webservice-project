@@ -1,6 +1,7 @@
 package com.example.individualwebservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -28,8 +29,8 @@ public class User {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "user")
-//    @JsonManagedReference
+    @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties({"content", "author"})
     private List<Post> postList;
 
     public User() {
