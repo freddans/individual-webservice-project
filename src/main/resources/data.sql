@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS bloggheaven;
+DROP TABLE IF exists addresses, users, posts;
 
-CREATE TABLE IF NOT EXISTS addresses (
+CREATE TABLE addresses (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     street VARCHAR(50),
     postal_code VARCHAR(20),
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS addresses (
     );
 
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(35),
     last_name VARCHAR(35),
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (address_id) REFERENCES addresses(id)
     );
 
-CREATE TABLE IF NOT EXISTS posts (
+CREATE TABLE posts (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     topic VARCHAR(255),
     content VARCHAR(255),
