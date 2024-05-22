@@ -29,7 +29,7 @@ public class User {
     private Address address;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Post> postList;
 
     public User() {
