@@ -10,9 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @Column(name = "firstname")
     private String firstName;
-//    @Column(name = "lastname")
     private String lastName;
     @Column(name = "email")
     private String email;
@@ -20,7 +18,6 @@ public class User {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-//    @Column(name = "membertype")
     private MemberType memberType;
 
     @ManyToOne
