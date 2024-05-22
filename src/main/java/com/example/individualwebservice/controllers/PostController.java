@@ -1,11 +1,9 @@
 package com.example.individualwebservice.controllers;
 
 import com.example.individualwebservice.entities.Post;
-import com.example.individualwebservice.entities.User;
 import com.example.individualwebservice.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

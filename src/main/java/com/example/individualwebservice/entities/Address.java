@@ -11,7 +11,7 @@ public class Address {
     private long id;
 
     private String street;
-    @Column(name = "postalcode")
+//    @Column(name = "postalcode")
     private String postalCode;
     private String city;
     private String country;

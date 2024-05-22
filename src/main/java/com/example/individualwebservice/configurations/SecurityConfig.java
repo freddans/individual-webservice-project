@@ -1,7 +1,6 @@
 package com.example.individualwebservice.configurations;
 
 import com.example.individualwebservice.converters.JwtAuthConverter;
-import com.example.individualwebservice.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
