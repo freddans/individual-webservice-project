@@ -1,6 +1,6 @@
 package com.example.individualwebservice.services;
 
-import com.example.individualwebservice.Repositories.PostRepository;
+import com.example.individualwebservice.repositories.PostRepository;
 import com.example.individualwebservice.entities.Post;
 import com.example.individualwebservice.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.individualwebservice.Repositories;
+package com.example.individualwebservice.repositories;
 
 import com.example.individualwebservice.entities.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
