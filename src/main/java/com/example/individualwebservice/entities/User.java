@@ -1,6 +1,9 @@
 package com.example.individualwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,17 +15,18 @@ public class User {
 
     private String firstName;
     private String lastName;
-    @Column(name = "email")
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     private String email;
-    @Column(name = "phone")
     private String phone;
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties({"content", "author"})
+    private List<Post> postList;
 
     public User() {
     }
@@ -90,5 +94,21 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
+
+    public void addPostToList(Post post) {
+        postList.add(post);
+    }
+
+    public void removePostFromList(Post post) {
+        postList.remove(post);
     }
 }
