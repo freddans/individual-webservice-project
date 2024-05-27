@@ -42,15 +42,17 @@ public class PostService {
 
         if (postInformation.getTopic() != null && postInformation.getContent() != null && id != 0) {
 
-            User existingUser = userService.findUserById(id);
+            User author = userService.findUserById(id);
 
-            if (existingUser != null) {
+            if (author != null) {
 
-                Post post = new Post(postInformation.getTopic(), postInformation.getContent(), existingUser);
+                Post post = new Post(postInformation.getTopic(), postInformation.getContent(), author);
 
-                existingUser.addPostToList(post);
+                author.addPostToList(post);
 
                 postRepository.save(post);
+
+                userService.saveOrUpdateUser(author);
 
                 return post;
             } else {
@@ -66,46 +68,78 @@ public class PostService {
     }
 
     public Post updatePost(long id, Post newPostInformation) {
-        Post existingPost = findPostById(id);
 
-        if (existingPost != null) {
+        if (newPostInformation.getAuthor() == null) {
 
-            if (!newPostInformation.getTopic().contains(existingPost.getTopic()) && !newPostInformation.getTopic().isEmpty()) {
+            Post existingPost = findPostById(id);
 
-                existingPost.setTopic(newPostInformation.getTopic());
-            }
-            if (!newPostInformation.getContent().contains(existingPost.getContent()) && !newPostInformation.getContent().isEmpty()) {
+            if (existingPost != null) {
 
-                existingPost.setContent(newPostInformation.getContent());
+                if (!newPostInformation.getTopic().equals(existingPost.getTopic()) && newPostInformation.getTopic() != null) {
+
+                    existingPost.setTopic(newPostInformation.getTopic());
+                }
+                if (!newPostInformation.getContent().equals(existingPost.getContent()) && newPostInformation.getContent() != null) {
+
+                    existingPost.setContent(newPostInformation.getContent());
+                }
             }
 
             postRepository.save(existingPost);
 
             return existingPost;
+
         } else {
 
-            return null;
+            Post existingPost = findPostById(id);
+            User existingAuthor = existingPost.getAuthor();
+            User newAuthor = userService.findUserById(newPostInformation.getAuthor().getId());
+
+            if (existingPost != null) {
+
+                if (!newPostInformation.getTopic().contains(existingPost.getTopic()) && newPostInformation.getTopic() != null) {
+
+                    existingPost.setTopic(newPostInformation.getTopic());
+                }
+                if (!newPostInformation.getContent().contains(existingPost.getContent()) && newPostInformation.getContent() != null) {
+
+                    existingPost.setContent(newPostInformation.getContent());
+                }
+
+                existingPost.setAuthor(newAuthor);
+
+                existingAuthor.removePostFromList(existingPost);
+                newAuthor.addPostToList(existingPost);
+
+                userService.saveOrUpdateUser(existingAuthor);
+                userService.saveOrUpdateUser(newAuthor);
+
+                postRepository.save(existingPost);
+            }
+
+            return existingPost;
         }
     }
 
     public String deletePost(long id) {
         Post postToBeDeleted = findPostById(id);
 
-
         if (postToBeDeleted != null) {
 
-            User user = postToBeDeleted.getAuthor();
+            User author = postToBeDeleted.getAuthor();
 
-            if (user != null) {
+            if (author != null) {
 
-                user.removePostFromList(postToBeDeleted);
+                author.removePostFromList(postToBeDeleted);
+
+                userService.saveOrUpdateUser(author);
 
                 postRepository.delete(postToBeDeleted);
 
                 return "Deleted post";
             } else {
 
-                return "ERROR: User null";
+                return "ERROR: Issue when retrieving Author/User";
             }
 
         } else {

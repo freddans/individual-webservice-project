@@ -13,14 +13,12 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "topic")
     private String topic;
-    @Column(name = "content")
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"phone", "memberType", "address", "postList"})
+    @JsonIgnoreProperties({"firstName", "lastName", "phone", "memberType", "address", "postList"})
     private User author;
 
     public Post() {
@@ -60,7 +58,7 @@ public class Post {
         return author;
     }
 
-    public void setUser(User author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 }

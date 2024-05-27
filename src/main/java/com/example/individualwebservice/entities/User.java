@@ -1,8 +1,6 @@
 package com.example.individualwebservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,17 +15,14 @@ public class User {
 
     private String firstName;
     private String lastName;
-    @Column(name = "email")
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
     private String email;
-    @Column(name = "phone")
     private String phone;
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
-
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnoreProperties({"content", "author"})
