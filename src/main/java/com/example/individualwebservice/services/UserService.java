@@ -69,4 +69,12 @@ public class UserService {
             return null;
         }
     }
+
+    public void saveOrUpdateUser(User user) {
+        if (user != null) {
+
+            userRepository.save(user);
+        } else {
+        }
+    }
 }

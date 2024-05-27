@@ -1,5 +1,9 @@
 package com.example.individualwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,22 +13,21 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "topic")
     private String topic;
-    @Column(name = "content")
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    @JsonIgnoreProperties({"firstName", "lastName", "phone", "memberType", "address", "postList"})
+    private User author;
 
     public Post() {
     }
 
-    public Post(String topic, String content, User user) {
+    public Post(String topic, String content, User author) {
         this.topic = topic;
         this.content = content;
-        this.user = user;
+        this.author = author;
     }
 
     public long getId() {
@@ -51,11 +54,11 @@ public class Post {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
